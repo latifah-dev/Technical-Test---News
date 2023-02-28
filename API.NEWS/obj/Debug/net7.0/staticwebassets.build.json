@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "h64Q+I1FdACtNDbEAvIAxEJ+hie3FPB392o2czq1lag=",
+  "Hash": "Wtqx0W9RGvGgp0+onpz2BN6Oi1pLzWre0J1zVD9ipYI=",
   "Source": "API.NEWS",
   "BasePath": "_content/API.NEWS",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "API.NEWS/wwwroot",
+      "Source": "API.NEWS",
+      "ContentRoot": "/home/latifah/news/API.NEWS/wwwroot/",
+      "BasePath": "_content/API.NEWS",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/home/latifah/news/API.NEWS/wwwroot/Image/string2-Screenshot at 2023-01-30 20-52-09.png",
+      "SourceId": "API.NEWS",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/latifah/news/API.NEWS/wwwroot/",
+      "BasePath": "_content/API.NEWS",
+      "RelativePath": "Image/string2-Screenshot at 2023-01-30 20-52-09.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Image/string2-Screenshot at 2023-01-30 20-52-09.png"
+    }
+  ]
 }

@@ -41,3 +41,15 @@
 /home/latifah/news/API.NEWS/obj/Debug/net7.0/API.NEWS.pdb
 /home/latifah/news/API.NEWS/obj/Debug/net7.0/API.NEWS.genruntimeconfig.cache
 /home/latifah/news/API.NEWS/obj/Debug/net7.0/ref/API.NEWS.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/MailKit.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/Microsoft.IdentityModel.Abstractions.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/Microsoft.IdentityModel.Logging.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/MimeKit.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/BouncyCastle.Crypto.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll
+/home/latifah/news/API.NEWS/bin/Debug/net7.0/API.NEWS.staticwebassets.runtime.json
