@@ -16,7 +16,11 @@ namespace API.NEWS.Controllers
         public async Task<IActionResult> Register(UserDto register) {
             //validasi users
             if(_dbContext.Users.Any(u => u.Email == register.Email)) {
-                return BadRequest("Users already axists.");
+                return BadRequest(new {
+                status = false,
+                message = "Users already exists.",
+                data = new {}
+                });
             }
             //hash password
             var PasswordHasher = new PasswordHasher<string>();
@@ -33,16 +37,20 @@ namespace API.NEWS.Controllers
             _dbContext.Users.Add(NewUser);
             await _dbContext.SaveChangesAsync();
             //send email 
-            var email  = new EmailDto() {
-                To = register.Email,
-                Subject = "VERIFICATION EMAIL",
-                Body = "<br/><br/>We are excited to tell you that your account is" +  
-      " successfully created. Please input this code to verify your account" +  
-      " <br/><br/>code : " + randomToken + "<br/><br/> Thank you. ",
-            };
-            _emailservice.SendEmail(email);
+            //var email  = new EmailDto() {
+            //    To = register.Email,
+            //    Subject = "VERIFICATION EMAIL",
+            //    Body = "<br/><br/>We are excited to tell you that your account is" +  
+     // " successfully created. Please input this code to verify your account" +  
+    //  " <br/><br/>code : " + randomToken + "<br/><br/> Thank you. ",
+           // };
+          //  _emailservice.SendEmail(email);
             //response
-            return Created("Register successly, check your email to verification !", NewUser);
+            return Ok(new {
+                status = true,
+                message = "Register successly, check your email to verification !",
+                data = NewUser,
+            });
         }
 
         [HttpPost]
@@ -52,17 +60,29 @@ namespace API.NEWS.Controllers
             var user = _dbContext.Users.FirstOrDefault(x => x.Email == login.Email);
             //validasi users is ready
             if(user == null) {
-                return Unauthorized("User does not exist");
+                return BadRequest(new {
+                status = false,
+                message = "Users not found.",
+                data = new {}
+                });
             }
             //verify password hash
             var PasswordHasher = new PasswordHasher<string>();
             var verifPass = PasswordHasher.VerifyHashedPassword(login.Email, user.Password, login.Password);
             if(verifPass == PasswordVerificationResult.Failed) {
-                return BadRequest("Incorrect password");
+                return BadRequest(new {
+                status = false,
+                message = "Incorrect Password",
+                data = new {}
+                });
             }
             //validasi users is verified
             if(user.VerifiedAt == null) {
-                return BadRequest("not verified !");
+                return BadRequest(new {
+                status = false,
+                message = "Not verified",
+                data = new {}
+                });
             }
             // definisikan klaim
             var claims = new List<Claim>
@@ -79,11 +99,17 @@ namespace API.NEWS.Controllers
             var securityToken = new JwtSecurityToken(header, payload);
             var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
             //response
-            return Ok(new TokenDto {
-                Message = $"Welcome back, {user.Email}",
-                Access_Token = token,
-                Token_Type = "Bearer",
-                Expires = DateTime.UtcNow.AddDays(1),
+            return Ok(new {
+                status = true,
+                message = $"Welcome back, {user.Email}",
+                data = new {
+                    auth = new {
+                        token = token,
+                        token_type = "Bearer",
+                        Expires = DateTime.UtcNow.AddDays(1),
+                    },
+                    user = user
+                }
             });
         }
         
@@ -94,13 +120,21 @@ namespace API.NEWS.Controllers
             var user = _dbContext.Users.FirstOrDefault(x => x.VerificationToken == token);
             //validasi user
             if(user == null) {
-                return BadRequest("User does not exist");
+                return BadRequest(new {
+                status = false,
+                message = "Users not found.",
+                data = new {}
+                });
             }
             //update date verified
             user.VerifiedAt = DateTime.UtcNow;
             await _dbContext.SaveChangesAsync();
             //response
-            return Ok("user verified :)");
+            return Ok(new {
+                status = true,
+                message = "Users verified.",
+                data = user,
+                });
         }
         
         [HttpPost]
@@ -109,7 +143,11 @@ namespace API.NEWS.Controllers
             //find user
             var user = _dbContext.Users.FirstOrDefault(x => x.Email== email);
             if(user == null) {
-                return BadRequest("User does not exist");
+                return BadRequest(new {
+                status = false,
+                message = "Users not found.",
+                data = new {}
+                });
             }
             //create random token
              var randomToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
@@ -118,15 +156,19 @@ namespace API.NEWS.Controllers
             await _dbContext.SaveChangesAsync();
             
             //send email 
-            var sendEmail  = new EmailDto() {
-                To = email,
-                Subject = "FORGOT PASSWORD",
-                Body = "<br/><br/>Input the code below to reset your account password." +  
-      "  If you didn't request a new password, you can safely delete this email." +  
-      " <br/><br/>code : " + randomToken + "<br/><br/> Thank you. ",
-            };
-            _emailservice.SendEmail(sendEmail);
-            return Ok("you may reset your token now");
+    //         var sendEmail  = new EmailDto() {
+    //             To = email,
+    //             Subject = "FORGOT PASSWORD",
+    //             Body = "<br/><br/>Input the code below to reset your account password." +  
+    //   "  If you didn't request a new password, you can safely delete this email." +  
+    //   " <br/><br/>code : " + randomToken + "<br/><br/> Thank you. ",
+    //         };
+    //         _emailservice.SendEmail(sendEmail);
+            return Ok(new {
+                status = true,
+                message = "you may reset your token now",
+                data = randomToken,
+                });
         }
         
         [HttpPost]
@@ -135,7 +177,11 @@ namespace API.NEWS.Controllers
             //find user
             var user = _dbContext.Users.FirstOrDefault(x => x.PasswordResetToken == reset.Token);
             if(user == null || user.ResetTokenExpires < DateTime.UtcNow) {
-                return BadRequest("Invalid Token");
+                return BadRequest(new {
+                status = false,
+                message = "invalid token",
+                data = new {}
+                });
             }
             //hash password
             var PasswordHasher = new PasswordHasher<string>();
@@ -145,7 +191,11 @@ namespace API.NEWS.Controllers
             user.PasswordResetToken = null;
             user.ResetTokenExpires = null;
             await _dbContext.SaveChangesAsync();
-            return Ok("Password successly reset");
+            return Ok(new {
+                status = true,
+                message = "Password successly reset",
+                data = user
+                });
         }
         
         [HttpPut]
@@ -159,21 +209,21 @@ namespace API.NEWS.Controllers
             var PasswordHasher = new PasswordHasher<string>();
             var verifPass = PasswordHasher.VerifyHashedPassword(Email, currentUser.Password, pass.OldPassword);
             if(verifPass == PasswordVerificationResult.Failed) {
-                return BadRequest("Incorrect old password");
+                return BadRequest(new {
+                status = false,
+                message = "incorrect old password",
+                data = new {}
+                });
             }
             //hash password
             var hash = PasswordHasher.HashPassword(currentUser.Email, pass.VerifyPassword);
             currentUser.Password = hash;
             await _dbContext.SaveChangesAsync();
-            return Ok("Password Has been changed");
-        }
-
-        [HttpPost]
-        [Route("email")]
-        public IActionResult SendEmail(EmailDto request)
-        {
-            _emailservice.SendEmail(request);
-            return Ok();
+            return Ok(new {
+                status = true,
+                message = "Password Has been changed",
+                data = user
+                });
         }
     }
 }
