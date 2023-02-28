@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "/home/latifah/news/API.NEWS/wwwroot/Image/asas-Screenshot at 2023-02-03 11-21-07.png",
+      "PackagePath": "staticwebassets/Image/asas-Screenshot at 2023-02-03 11-21-07.png"
+    },
+    {
       "Id": "/home/latifah/news/API.NEWS/wwwroot/Image/news-Screenshot at 2023-02-14 18-03-51.png",
       "PackagePath": "staticwebassets/Image/news-Screenshot at 2023-02-14 18-03-51.png"
     },

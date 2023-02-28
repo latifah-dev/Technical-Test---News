@@ -1,74 +1,52 @@
 @extends('welcome')
 @section('content')
-<script >
-  // Alpine.data("auth", () => ({
-  //   show: false,
-  //   payload:{email: '',password: ''},
-  //   users: [],
-  //   toggle: '0',
-  //   respon: '',
-  //   login(){
-  //       const data = new FormData()
-  //       data.append('email', this.payload.email)
-  //       data.append('password', this.payload.password)
-  //       const respon = fetch('https://friendzone-bakery.fly.dev/api/login',{
-  //       method: 'POST',
-  //       body: data
-  //       })
-  //       .then(async (response) => {
-  //       this.users = await response.json()
-  //       const user = this.users.data
-  //       let token = localStorage.setItem('token', user.auth.token)
-  //       this.token = token
-  //       if(user.user.roleid == '1' || user.user.roleid == '2' ){
-  //           window.location.replace('https://fzbakery.fly.dev/dashboard')
-  //       }
-  //       if(user.user.roleid == '3'){
-  //           window.location.replace('https://fzbakery.fly.dev/')
-  //       }
-  //       });
-  //   },
-  //   }))
-
-    Alpine.data('login', () => ({
-        payload: {
-            email: '',
-            password: '',
-        },
-        async masuk() {
-            let login = await fetch('http://localhost:5138/api/Auth/login', {
-                method: 'POST',
-                body: this.payload,
-                mode: 'no-cors',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-            })
-
-            console.log(login)
-            //return window.location.replace('')
-        },
-    }));
-</script>
-<div class="container" x-data="login">
+<div class="container">
     @if($errors->any())
     {{$errors->first()}}
     @endif
-<form x-on:submit.prevent="masuk()">
+    <form action="/login">
+      @csrf
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="nama" class="form-control" x-model="payload.email" placeholder="masukkan email">
+      <input type="nama" class="form-control" name="email" id="email" placeholder="masukkan email">
     </div>
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" x-model="payload.password" placeholder="masukkan password">
-    </div>
-    <div>
+        <input type="password" class="form-control" name="password" id="password" placeholder="masukkan password">
+      </div>
       <a href="/register"><label for="register">Register</label></a> <br>
-    <a href="/forgot-password"><label for="forgotpassword">Forgot Password</label></a>
-    </div>
-    
-    <button type="submit" class="btn btn-primary">LOGIN</button>
+      <a href="/forgot-password"><label for="forgotpassword">Forgot Password</label></a>
+    <button type="button" class="btn btn-primary" id="login">LOGIN</button>
   </form>
 </div>
-  @endsection
+<script>
+$(document).ready(function(){
+    $('#login').click(function(){
+        var email = $('#email').val();
+        var password = $('#password').val();
+        $.ajax({
+            type:'POST',
+            url:'/login',
+            data:{email:email, password:password, _token: '{{csrf_token()}}'},
+            success:function(data){
+                // code to handle success response from API
+                // data adalah respons dari API
+                if (data.status == 'success') {
+                    // Jika status sukses, arahkan pengguna ke halaman dashboard
+                    window.location.href = '/dashboard';
+                } else {
+                    // Jika status gagal, tampilkan pesan error
+                    alert(data.message);
+                }
+            },
+            error:function(xhr,status,error){
+                // code to handle error response from API
+                // xhr adalah objek XMLHttpRequest, status adalah string status error, error adalah objek error
+              console.log(xhr.responseText);
+              alert('Terjadi kesalahan saat memproses permintaan');
+            }
+        });
+    });
+});
+</script>
+@endsection
