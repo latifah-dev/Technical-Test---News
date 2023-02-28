@@ -21,9 +21,17 @@ namespace API.NEWS.Controllers
         public async Task<IActionResult> showNews() {
             var news = await _dbContext.News.ToListAsync();
             if (news.Count  == 0) {
-                return BadRequest("data article kosong");
+                return BadRequest(new {
+                status = false,
+                message = "news if empty",
+                data = new {}
+                });
             }
-            return Ok(news);
+            return Ok(new {
+                status = true,
+                message = "news list",
+                data = news
+                });
         }
 
         [HttpGet]
@@ -32,9 +40,17 @@ namespace API.NEWS.Controllers
         public async Task<IActionResult> detailNews(int id) {
             var news = await _dbContext.News.FindAsync(id);
             if(news == null) {
-                return BadRequest($"news dengan id {id} tidak ada");
+                return BadRequest(new {
+                status = false,
+                message = $"news dengan id {id} tidak ada",
+                data = new {}
+                });
             }
-            return Ok(news);
+            return Ok(new {
+                status = true,
+                message = $"news detail {id}",
+                data = news
+                });
         }
 
         [HttpPost]
@@ -63,7 +79,11 @@ namespace API.NEWS.Controllers
             };
                 _dbContext.Add(newNews);
                 await _dbContext.SaveChangesAsync();
-            return Ok(newNews);
+            return Ok(new {
+                status = true,
+                message = "news has been created !",
+                data = newNews
+                });
         }
 
         [HttpPut]
@@ -95,7 +115,11 @@ namespace API.NEWS.Controllers
 
             _dbContext.News.Update(news);
             await _dbContext.SaveChangesAsync();
-            return Ok(update);
+            return Ok(new {
+                status = true,
+                message = "news has been updated !",
+                data = news
+                });
         }
 
         [HttpDelete]
@@ -106,7 +130,11 @@ namespace API.NEWS.Controllers
 
             _dbContext.News.Remove(news);
             await _dbContext.SaveChangesAsync();
-            return Ok("news has been deleted !");
+            return Ok(new {
+                status = true,
+                message = "news has been deleted !",
+                data = new {}
+                });
         }
     }
 }
