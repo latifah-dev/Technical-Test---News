@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "/home/latifah/news/API.NEWS/wwwroot/Image/string2-Screenshot at 2023-01-30 20-52-09.png",
+      "PackagePath": "staticwebassets/Image/string2-Screenshot at 2023-01-30 20-52-09.png"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.API.NEWS.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.build.API.NEWS.props",
+      "PackagePath": "build\\API.NEWS.props"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.buildMultiTargeting.API.NEWS.props",
+      "PackagePath": "buildMultiTargeting\\API.NEWS.props"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.buildTransitive.API.NEWS.props",
+      "PackagePath": "buildTransitive\\API.NEWS.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
