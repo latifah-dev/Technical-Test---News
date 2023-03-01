@@ -7,11 +7,23 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    public function index()
+    public function masuk(Request $request)
     {
-        $getKelas = HttpClient::fetch("GET", HttpClient::apiUrl()."kelas");
-        // $kelas = $getKelas['data'];
-        dd($getKelas);
-        return view('admin.kelas.index', compact('kelas'));
+        $payload = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        $auth = HttpClient::fetch(
+            "POST",
+            HttpClient::apiUrl()."login",
+            $payload,
+        );
+
+        if($auth['status'] == false){
+            dd($auth['message']);
+        }
+
+        return redirect('www.google.com');
     }
 }

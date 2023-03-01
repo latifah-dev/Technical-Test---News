@@ -29,6 +29,8 @@ class HttpClient
                 // attach file
                 $client->attach($key, file_get_contents($path), $name);
             }
+            //Convert array to json form...
+     
             // fetch api
             return $client->post($url, $body);
         }
@@ -37,8 +39,10 @@ class HttpClient
         return Http::withHeaders($headers)->post($url, $body)->json();
     }
 
+
+
     public static function apiUrl()
     {
-        return "https://api-obitocourses.fly.dev/api/";
+        return "http://localhost:5138/api/";
     }
 }

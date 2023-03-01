@@ -32,14 +32,28 @@
               <a class="nav-link" href="/detail-news">Detail News<span class="sr-only">(current)</span></a>
             </li>
           </ul>
-          @if (!session()->get("logged", false))
+          @if (!session()->has('token'))
           <a href="/login" class="btn btn-outline-success my-2 my-sm-0">Login</a>
           @else
-          <a href="/logout" class="btn btn-outline-success my-2 my-sm-0">Logout</a>
+          <a href="/change-password" class="btn btn-outline-success my-2 my-sm-0">Change Password</a>
+          <a href="{{route('logout')}}" class="btn btn-outline-success my-2 my-sm-0">Logout</a>
           @endif
 
         </div>
-      </nav>
+      </nav>  
+    </div>
+    <div class="container">
+      @if (session('success'))
+      <div class="alert alert-success">
+          {{ session('success') }}
+      </div>
+    @endif
+
+    @if (session('error'))
+      <div class="alert alert-danger">
+          {{ session('error') }}
+      </div>
+    @endif
     </div>
       @yield('content')
 

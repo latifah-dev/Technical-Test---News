@@ -1,20 +1,15 @@
 @extends('welcome')
 @section('content')
 <div class="container">
-    @if($errors->any())
-    {{$errors->first()}}
-    @endif
-<form action="/login">
+
+<form action="{{route('verify')}}" method="post">
     @csrf
+    <h2 class="d-flex justify-content-center mt-5">Verify Email</h2>
     <div class="form-group">
-      <label for="email">Email</label>
-      <input type="nama" class="form-control" name="email" id="email" placeholder="masukkan email">
+      <label for="email">Code</label>
+      <input type="nama" class="form-control" name="token" id="token" placeholder="masukkan code">
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="text" class="form-control" name="password" id="password" placeholder="masukkan password">
-      </div>
-    <button type="submit" class="btn btn-primary">LOGIN</button>
+    <button type="submit" class="btn btn-primary">Verify</button>
   </form>
 </div>
   @endsection
