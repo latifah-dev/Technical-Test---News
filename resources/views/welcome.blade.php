@@ -7,7 +7,6 @@
     <script  src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <title>NEWS</title>
   </head>
   <body>
@@ -20,17 +19,19 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+            @if (!session()->has('token'))
             <li class="nav-item active">
               <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
             </li>
-
+            @else
             <li class="nav-item active">
               <a class="nav-link" href="/create-news">Create News<span class="sr-only">(current)</span></a>
             </li>
 
             <li class="nav-item active">
-              <a class="nav-link" href="/detail-news">Detail News<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/show-news">List News<span class="sr-only">(current)</span></a>
             </li>
+            @endif
           </ul>
           @if (!session()->has('token'))
           <a href="/login" class="btn btn-outline-success my-2 my-sm-0">Login</a>

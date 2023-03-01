@@ -112,10 +112,10 @@ class AuthController extends Controller
         );
 
         if ($reset['status'] == false) {
-            return redirect('/register')->with('error', $reset['message']);
+            return redirect('/reset-password')->with('error', $reset['message']);
         }
 
-        return redirect('/verify-email')->with('success', $reset['message']);
+        return redirect('/login')->with('success', $reset['message']);
     }
     public function changePassword(Request $request)
     {
