@@ -37,14 +37,14 @@ namespace API.NEWS.Controllers
             _dbContext.Users.Add(NewUser);
             await _dbContext.SaveChangesAsync();
             //send email 
-            //var email  = new EmailDto() {
-            //    To = register.Email,
-            //    Subject = "VERIFICATION EMAIL",
-            //    Body = "<br/><br/>We are excited to tell you that your account is" +  
-     // " successfully created. Please input this code to verify your account" +  
-    //  " <br/><br/>code : " + randomToken + "<br/><br/> Thank you. ",
-           // };
-          //  _emailservice.SendEmail(email);
+            var email  = new EmailDto() {
+                To = register.Email,
+                Subject = "VERIFICATION EMAIL",
+                Body = "<br/><br/>We are excited to tell you that your account is" +  
+   " successfully created. Please input this code to verify your account" +  
+    " <br/><br/>code : " + randomToken + "<br/><br/> Thank you. ",
+        };
+         _emailservice.SendEmail(email);
             //response
             return Ok(new {
                 status = true,
@@ -156,17 +156,17 @@ namespace API.NEWS.Controllers
             await _dbContext.SaveChangesAsync();
             
             //send email 
-    //         var sendEmail  = new EmailDto() {
-    //             To = email,
-    //             Subject = "FORGOT PASSWORD",
-    //             Body = "<br/><br/>Input the code below to reset your account password." +  
-    //   "  If you didn't request a new password, you can safely delete this email." +  
-    //   " <br/><br/>code : " + randomToken + "<br/><br/> Thank you. ",
-    //         };
-    //         _emailservice.SendEmail(sendEmail);
+             var sendEmail  = new EmailDto() {
+                 To = email,
+                 Subject = "FORGOT PASSWORD",
+                 Body = "<br/><br/>Input the code below to reset your account password." +  
+       "  If you didn't request a new password, you can safely delete this email." +  
+       " <br/><br/>code : " + randomToken + "<br/><br/> Thank you. ",
+             };
+             _emailservice.SendEmail(sendEmail);
             return Ok(new {
                 status = true,
-                message = "you may reset your token now",
+                message = "you may reset your token now, check your email for get code",
                 data = randomToken,
                 });
         }
@@ -198,7 +198,7 @@ namespace API.NEWS.Controllers
                 });
         }
         
-        [HttpPut]
+        [HttpPost]
         [Authorize]
         [Route("change-password")]
         public async Task<IActionResult> ChangePassword(PasswordDto pass) {
