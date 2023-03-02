@@ -43,6 +43,6 @@ class HttpClient
 
     public static function apiUrl()
     {
-        return "http://localhost:5138/api/";
+        return "https://a519-113-11-180-33.ap.ngrok.io/api/";
     }
 }

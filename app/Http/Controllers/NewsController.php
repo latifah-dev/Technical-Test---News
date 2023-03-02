@@ -14,6 +14,10 @@ class NewsController extends Controller
         $news = $getNews['data'];
         if ($getNews['status'] == false) {
             return redirect('/create-news')->with('error', $getNews['message']);
+        } else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/reset-password')->with('error', $message);
         }
 
         return view('shownews', compact('news'));
@@ -28,6 +32,10 @@ class NewsController extends Controller
         $news = $getNews['data'];
         if ($getNews['status']==false) {
         return redirect('/show-news')->with('error', $getNews['message']);
+        }else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/reset-password')->with('error', $message);
         }
         return view('detailnews', compact('news'));
     }
@@ -54,6 +62,10 @@ class NewsController extends Controller
 
         if ($create['status'] == false) {
         return redirect('/create-news')->with('error', $create['message']);
+        } else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/reset-password')->with('error', $message);
         }
 
         return redirect('/show-news')->with('success', $create['message']);
@@ -68,8 +80,12 @@ class NewsController extends Controller
         $news = $getNews['data'];
         if ($getNews['status']==false) {
         return redirect('/show-news')->with('error', $getNews['message']);
-    }
-    return view('updatenews', compact('news'));
+        }else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/reset-password')->with('error', $message);
+        }
+        return view('updatenews', compact('news'));
     }
     
     public function updateNews(Request $request, $id)
@@ -102,6 +118,10 @@ class NewsController extends Controller
 
     if ($create['status'] == false) {
         return redirect('/show-news')->with('error', $create['message']);
+    } else if(isset($reset['errors'])) {
+        $errors = $reset['errors'];
+        $message = array_values($errors)[0][0];
+        return redirect('/reset-password')->with('error', $message);
     }
     
     return redirect('/show-news')->with('success', $create['message']);
@@ -116,6 +136,10 @@ class NewsController extends Controller
         );
         if ($delete['status'] == false) {
             return redirect('/show-news')->with('error', $delete['message']);
+        } else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/reset-password')->with('error', $message);
         }
         return redirect('/show-news')->with('success', $delete['message']);
     }

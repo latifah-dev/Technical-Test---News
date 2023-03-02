@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\HttpClient;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -27,6 +28,10 @@ class AuthController extends Controller
 
         if ($auth['status'] == false) {
             return redirect('/login')->with('error', $auth['message']);
+        }else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/login')->with('error', $message);
         }
 
         $token = $auth['data']['auth']['token'];
@@ -61,6 +66,10 @@ class AuthController extends Controller
 
         if ($register['status'] == false) {
             return redirect('/register')->with('error', $register['message']);
+        } else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/register')->with('error', $message);
         }
 
         return redirect('/verify-email')->with('success', $register['message']);
@@ -77,6 +86,10 @@ class AuthController extends Controller
 
         if ($verify['status'] == false) {
             return redirect('/')->with('error', $verify['message']);
+        } else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/')->with('error', $message);
         }
 
         return redirect('/login')->with('success', $verify['message']);
@@ -93,6 +106,10 @@ class AuthController extends Controller
 
         if ($forgot['status'] == false) {
             return redirect('/forgot-password')->with('error', $forgot['message']);
+        } else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/forgot-password')->with('error', $message);
         }
 
         return redirect('/reset-password')->with('success', $forgot['message']);
@@ -110,11 +127,13 @@ class AuthController extends Controller
             HttpClient::apiUrl()."Auth/"."reset-password",
             $payload,
         );
-
         if ($reset['status'] == false) {
             return redirect('/reset-password')->with('error', $reset['message']);
+        } else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/reset-password')->with('error', $message);
         }
-
         return redirect('/login')->with('success', $reset['message']);
     }
     public function changePassword(Request $request)
@@ -129,8 +148,13 @@ class AuthController extends Controller
             HttpClient::apiUrl()."Auth/change-password",
             $payload,
         );
+        
         if ($change['status'] == false) {
             return redirect('/change-password')->with('error', $change['message']);
+        } else if(isset($reset['errors'])) {
+            $errors = $reset['errors'];
+            $message = array_values($errors)[0][0];
+            return redirect('/change-password')->with('error', $message);
         }
 
         return redirect('/')->with('success', $change['message']);
