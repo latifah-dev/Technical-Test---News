@@ -23,7 +23,7 @@ class HttpClient
                 $client->attach($key, file_get_contents($path), $name);
             }
             //Convert array to json form...
-     
+
             // fetch api
             return $client->post($url, $body);
         }
@@ -32,6 +32,6 @@ class HttpClient
     }
     public static function apiUrl()
     {
-        return "http://localhost:8080/api/";
+        return "https://e663-113-11-180-30.ap.ngrok.io/api/";
     }
 }
