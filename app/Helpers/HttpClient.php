@@ -1,10 +1,6 @@
 <?php
-
 namespace App\Helpers;
-
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades;
-
 class HttpClient
 {
     public static function fetch($method, $url, $body = [], $files = [])
@@ -15,14 +11,11 @@ class HttpClient
         if ($token != "") {
             $headers["Authorization"] = "Bearer $token";
         }
-
         if ($method == "GET") {
             return Http::withHeaders($headers)->get($url)->json();
         }
-
         if (sizeof($files) > 0) {
             $client = Http::asMultipart()->withHeaders($headers);
-
             foreach ($files as $key=> $file) {
                 $path = $file->getPathname();
                 $name = $file->getClientOriginalName();
@@ -34,15 +27,11 @@ class HttpClient
             // fetch api
             return $client->post($url, $body);
         }
-
         // fetch post
-        return Http::withHeaders($headers)->post($url, $body)->json();
+        return Http::asMultipart()->withHeaders($headers)->post($url, $body)->json();
     }
-
-
-
     public static function apiUrl()
     {
-        return "https://a519-113-11-180-33.ap.ngrok.io/api/";
+        return "http://localhost:8080/api/";
     }
 }

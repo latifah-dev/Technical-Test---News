@@ -28,8 +28,8 @@ class AuthController extends Controller
 
         if ($auth['status'] == false) {
             return redirect('/login')->with('error', $auth['message']);
-        }else if(isset($reset['errors'])) {
-            $errors = $reset['errors'];
+        }else if(isset($auth['errors'])) {
+            $errors = $auth['errors'];
             $message = array_values($errors)[0][0];
             return redirect('/login')->with('error', $message);
         }
@@ -66,8 +66,8 @@ class AuthController extends Controller
 
         if ($register['status'] == false) {
             return redirect('/register')->with('error', $register['message']);
-        } else if(isset($reset['errors'])) {
-            $errors = $reset['errors'];
+        } else if(isset($register['errors'])) {
+            $errors = $register['errors'];
             $message = array_values($errors)[0][0];
             return redirect('/register')->with('error', $message);
         }
@@ -86,8 +86,8 @@ class AuthController extends Controller
 
         if ($verify['status'] == false) {
             return redirect('/')->with('error', $verify['message']);
-        } else if(isset($reset['errors'])) {
-            $errors = $reset['errors'];
+        } else if(isset($verify['errors'])) {
+            $errors = $verify['errors'];
             $message = array_values($errors)[0][0];
             return redirect('/')->with('error', $message);
         }
@@ -106,8 +106,8 @@ class AuthController extends Controller
 
         if ($forgot['status'] == false) {
             return redirect('/forgot-password')->with('error', $forgot['message']);
-        } else if(isset($reset['errors'])) {
-            $errors = $reset['errors'];
+        } else if(isset($forgot['errors'])) {
+            $errors = $forgot['errors'];
             $message = array_values($errors)[0][0];
             return redirect('/forgot-password')->with('error', $message);
         }
@@ -151,8 +151,8 @@ class AuthController extends Controller
         
         if ($change['status'] == false) {
             return redirect('/change-password')->with('error', $change['message']);
-        } else if(isset($reset['errors'])) {
-            $errors = $reset['errors'];
+        } else if(isset($change['errors'])) {
+            $errors = $change['errors'];
             $message = array_values($errors)[0][0];
             return redirect('/change-password')->with('error', $message);
         }

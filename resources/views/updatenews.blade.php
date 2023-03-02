@@ -20,7 +20,7 @@
     <input type="hidden" name="Url" id="Url" value="{{$news['url']}}">
     <input type="hidden" name="FileName" id="FileName" value="{{$news['fileName']}}">
     
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Update</button>
   </form>
 </div>
   @endsection
