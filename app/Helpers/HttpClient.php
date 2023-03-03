@@ -32,6 +32,6 @@ class HttpClient
     }
     public static function apiUrl()
     {
-        return "https://e663-113-11-180-30.ap.ngrok.io/api/";
+        return "https://b2b8-113-11-180-30.ap.ngrok.io/api/";
     }
 }
